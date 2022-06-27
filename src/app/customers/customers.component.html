@@ -1,0 +1,48 @@
+
+<div style="width: 80%; margin:auto">
+ 
+<ng-container *ngIf="customers | async;else failureOrLoading">
+
+ <div *ngIf="searchFromGroup">
+  
+    <form class="d-flex"  [formGroup]="searchFromGroup" (ngSubmit)="searchFunc()" >
+        <input class="form-control me-2" formControlName="nom" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">
+            <i class="bi bi-search"></i></button>
+    </form>
+</div>
+    <table class="table table-hover" >
+    <thead>
+        <tr>
+          <th scope="col">id</th>
+          <th scope="col">name</th>
+          <th scope="col">email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cust of customers | async">
+          <th scope="row" >{{cust.id}}</th>
+          <td>{{cust.name}}</td>
+          <td>{{cust.email}}</td>
+          <td><button (click)="deleteCustomer(cust)" class="btn btn-danger"><i class="bi bi-trash"></i></button></td>
+          <td><button (click)="handlecustaccount(cust)" class="btn btn-success">Accounts</button></td>
+
+        </tr>
+     
+      </tbody> 
+</table>
+</ng-container>
+ <ng-template #failureOrLoading>
+    <div class="text-danger" *ngIf="errormessage; else load"> 
+           {{errormessage}}
+    </div>
+    
+ </ng-template>
+ <ng-template #load>
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+ </ng-template>
+</div>
